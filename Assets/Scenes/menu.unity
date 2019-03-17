@@ -2831,7 +2831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ButtonExampleGameObject: {fileID: 1956781277}
   ButtonHeightInterval: 120
-  IsDebug: 0
+  IsDebug: 1
 --- !u!114 &535042955
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -246,7 +246,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 20c7eb151d7441f4b8cb971a12cb77c0, type: 2}
+  - {fileID: 2100000, guid: a7bbd0331f51bb6468eff84d56a1315c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -435,7 +435,6 @@ MonoBehaviour:
   - {fileID: 1468567580568242}
   - {fileID: 1693814813841380}
   - {fileID: 1283241502892100}
-  resourceInConveyor: {fileID: 0}
 --- !u!114 &114988121980340022
 MonoBehaviour:
   m_ObjectHideFlags: 1
