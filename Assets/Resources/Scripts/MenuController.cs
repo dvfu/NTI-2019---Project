@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -21,6 +22,7 @@ public class MenuController : MonoBehaviour
 {
     public GameObject ButtonExampleGameObject;
     public float ButtonHeightInterval = 0.0f;
+    public bool IsDebug = false;
 
     private readonly List<GameObject> createdButtons = new List<GameObject>();
 
@@ -33,6 +35,9 @@ public class MenuController : MonoBehaviour
 
     private void Awake()
     {
+        if (IsDebug)
+            OnLoadGameButtonClick();
+
         ButtonExampleGameObject.SetActive(false);
         CreateButtons();
     }
@@ -83,12 +88,24 @@ public class MenuController : MonoBehaviour
 
     private void OnNewGameButtonClick()
     {
+        GameState.readInputFileIfExists = false;
         SceneManager.LoadScene("scenes/main");
     }
 
     private void OnLoadGameButtonClick()
     {
-        // TODO
+        // для демки думаю и так сойдёт.
+        string filename = null;
+        foreach (var path in Directory.GetFiles("."))
+            if (path == ".\\input.txt" || path == ".\\input01.txt")
+                filename = path;
+
+        if (filename != null) {
+            GameState.filename = filename;
+            GameState.readInputFileIfExists = true;
+        }
+
+        SceneManager.LoadScene("scenes/main");
     }
 
     private void OnExitButtonClick()

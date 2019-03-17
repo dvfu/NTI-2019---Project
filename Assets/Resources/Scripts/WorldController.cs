@@ -25,7 +25,7 @@ public class WorldController : MonoBehaviour
     public GameObject StockPrefab;
     public GameObject AssemblyMachinePrefab;
 
-    private int simulationSeconds;
+    private int simulationSeconds = -1;
 
     private void CreateSceneObjects(InputData inputObjects)
     {
@@ -66,9 +66,11 @@ public class WorldController : MonoBehaviour
 
     public void Awake()
     {
-        var inputData = FileHandler.ReadInputFile(GameState.fileName);
-        simulationSeconds = inputData.simulationSeconds;
-        CreateSceneObjects(inputData);
+        if (GameState.readInputFileIfExists) {
+            var inputData = FileHandler.ReadInputFile(GameState.filename);
+            simulationSeconds = inputData.simulationSeconds;
+            CreateSceneObjects(inputData);
+        }
 
         var container = ResourceContainer.GetInstance();
         container.resourceSources = new List<GameObject>(ResourceSourcePrefabs);
@@ -78,6 +80,8 @@ public class WorldController : MonoBehaviour
     public void FixedUpdate()
     {
         if (simulationSeconds != -1 && Time.timeSinceLevelLoad > simulationSeconds) {
+            Time.timeScale = 0.0f;
+
             var outputData = new OutputData{resources = new List<Resource>()};
             foreach (var resourceController in FindObjectsOfType<ResourceController>()) {
                 var position = resourceController.gameObject.transform.position;
@@ -85,7 +89,6 @@ public class WorldController : MonoBehaviour
                 outputData.resources.Add(resource);
             }
             FileHandler.WriteOutputFile(outputData);
-            Time.timeScale = 0.0f;
             Application.Quit();
         }
     }
