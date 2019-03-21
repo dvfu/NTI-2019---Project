@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -4126,10 +4126,12 @@ MonoBehaviour:
   ResourceSourcePrefabs:
   - {fileID: 1889529863999146, guid: 1156c5a8e2aa6364aac0b45ad4e2f305, type: 2}
   - {fileID: 1647738947112692, guid: ccfeb77542a7e004ba0b6a6c85464c66, type: 2}
+  - {fileID: 1647738947112692, guid: fb14fc57a7f77d942af0de53689d17e3, type: 2}
   ResourcePrefabs:
   - {fileID: 1468147563508826, guid: dd336e9b419868247b5607f9ffa9fdbb, type: 2}
   - {fileID: 1296423266126680, guid: cce75d3c5feec0e4494483d534cf740c, type: 2}
   - {fileID: 1224290968238998, guid: 63b83dde872467b48832f6399686c722, type: 2}
+  - {fileID: 1224290968238998, guid: b4eb9f1b333b2dc4ea2f1f6db0b6d398, type: 2}
   ConveyorPrefab: {fileID: 1970943904876862, guid: 4f25494f7d806cd47ac0468e10e7c9db,
     type: 2}
   StockPrefab: {fileID: 1683623649414272, guid: c94e5aec155e3ec4fbc7ca84eda9ff3f,

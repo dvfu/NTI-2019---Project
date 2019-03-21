@@ -48,7 +48,7 @@ abstract public class AbstractConveyorController : MonoBehaviour
         foreach (var resource in resourceInConveyorSet.Keys) {
             if (resource.transform.localPosition != Vector3.zero) {
                 var position = resource.transform.localPosition;
-                resource.transform.localPosition = position * Mathf.Max(1 - Time.deltaTime * Consts.CONVEYOR_SPEED / position.magnitude, 0);
+                resource.transform.localPosition = position * Mathf.Max(1 - Time.fixedDeltaTime * Consts.CONVEYOR_SPEED / position.magnitude, 0);
             }
         }
 

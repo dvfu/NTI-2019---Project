@@ -57,11 +57,11 @@ public class FileHandler
         if (x == 1 && y == 0)
             rotation = 0;
         else if (x == 0 && y == 1)
-            rotation = 90;
+            rotation = -90;
         else if (x == -1 && y == 0)
             rotation = 180;
         else if (x == 0 && y == -1)
-            rotation = -90;
+            rotation = 90;
         else
             Debug.Assert(false);
 
@@ -75,7 +75,7 @@ public class FileHandler
         var resourceSources = new List<ResourceSource>();
         for (int i = 0, count = int.Parse(reader.ReadLine()); i < count; ++i) {
             var numbers = reader.ReadLine().Split(' ');
-            resourceSources.Add(new ResourceSource { x = float.Parse(numbers[0]), y = float.Parse(numbers[1]), type = int.Parse(numbers[2]) - 1 });
+            resourceSources.Add(new ResourceSource { x = float.Parse(numbers[0]), y = float.Parse(numbers[1]), type = int.Parse(numbers[2]) });
         }
 
         var assemblyMachines = new List<AssemblyMachine>();
