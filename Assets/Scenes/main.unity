@@ -4127,6 +4127,7 @@ MonoBehaviour:
   - {fileID: 1889529863999146, guid: 1156c5a8e2aa6364aac0b45ad4e2f305, type: 2}
   - {fileID: 1647738947112692, guid: ccfeb77542a7e004ba0b6a6c85464c66, type: 2}
   - {fileID: 1647738947112692, guid: fb14fc57a7f77d942af0de53689d17e3, type: 2}
+  - {fileID: 1647738947112692, guid: 81f5f1fe7c1a9e242a569cfa38dfb24d, type: 2}
   ResourcePrefabs:
   - {fileID: 1468147563508826, guid: dd336e9b419868247b5607f9ffa9fdbb, type: 2}
   - {fileID: 1296423266126680, guid: cce75d3c5feec0e4494483d534cf740c, type: 2}
@@ -4134,6 +4135,14 @@ MonoBehaviour:
   - {fileID: 1224290968238998, guid: b4eb9f1b333b2dc4ea2f1f6db0b6d398, type: 2}
   - {fileID: 1224290968238998, guid: 1378d696eee5dde4ebf20995f62ff67d, type: 2}
   - {fileID: 1224290968238998, guid: 8a9998d33324e514d887e0cb18beae7c, type: 2}
+  - {fileID: 1224290968238998, guid: 9b19458a4996c69428fbcc5ec2e82f27, type: 2}
+  - {fileID: 1224290968238998, guid: 3203e6da520d6144585b941406879715, type: 2}
+  - {fileID: 1224290968238998, guid: b7f75f8b938b59342a9bf4f352adffdf, type: 2}
+  - {fileID: 1224290968238998, guid: 6a6f78a8e9417c04c848d552ad2ff26f, type: 2}
+  - {fileID: 1224290968238998, guid: 57daaac41a5fda54984b0ea90d1b9c0f, type: 2}
+  - {fileID: 1224290968238998, guid: 8df951de98eb8134daf37ea512ad4458, type: 2}
+  - {fileID: 1224290968238998, guid: 9d802470b97f1b24fadfa5079a88e985, type: 2}
+  - {fileID: 1224290968238998, guid: 3df43ac0999aede44a1299203c603bd7, type: 2}
   ConveyorPrefab: {fileID: 1970943904876862, guid: 4f25494f7d806cd47ac0468e10e7c9db,
     type: 2}
   StockPrefab: {fileID: 1683623649414272, guid: c94e5aec155e3ec4fbc7ca84eda9ff3f,
