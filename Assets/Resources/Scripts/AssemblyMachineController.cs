@@ -22,7 +22,7 @@ public class AssemblyMachineController : AbstractConveyorController
 
         GameObject firstResource = null, secondResource = null;
         foreach (var resource in resourceInConveyorSet.Keys) {
-            int type = resource.GetComponent<ResourceController>().Type;
+            var type = resource.GetComponent<ResourceController>().Type;
             if (firstResource == null && resource.transform.localPosition == Vector3.zero && type == inputFirstResourceType)
                 firstResource = resource;
             else if (secondResource == null && resource.transform.localPosition == Vector3.zero && type == inputSecondResourceType)

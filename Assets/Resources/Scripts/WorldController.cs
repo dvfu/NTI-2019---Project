@@ -26,6 +26,7 @@ public class WorldController : MonoBehaviour
     public GameObject AssemblyMachinePrefab;
 
     private int simulationSeconds = -1;
+    private bool isLastFrame = false;
 
     private void CreateSceneObjects(InputData inputObjects)
     {
@@ -79,7 +80,7 @@ public class WorldController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (simulationSeconds != -1 && Time.timeSinceLevelLoad > simulationSeconds) {
+        if (isLastFrame) {
             Time.timeScale = 0.0f;
 
             var outputData = new OutputData{resources = new List<Resource>()};
@@ -91,5 +92,7 @@ public class WorldController : MonoBehaviour
             FileHandler.WriteOutputFile(outputData);
             Application.Quit();
         }
+
+        isLastFrame = isLastFrame || simulationSeconds != -1 && Time.timeSinceLevelLoad > simulationSeconds;
     }
 }
