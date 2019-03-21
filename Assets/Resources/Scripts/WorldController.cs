@@ -25,6 +25,8 @@ public class WorldController : MonoBehaviour
     public GameObject StockPrefab;
     public GameObject AssemblyMachinePrefab;
 
+    public static int MoveCount = 0;
+
     private int simulationSeconds = -1;
     private float simulationTimeSeonds;
     private bool isLastFrame = false;
@@ -81,6 +83,8 @@ public class WorldController : MonoBehaviour
 
     public void FixedUpdate()
     {
+        ++MoveCount;
+
         simulationTimeSeonds += Time.fixedDeltaTime;
         if (isLastFrame) {
             Time.timeScale = 0.0f;
@@ -95,6 +99,15 @@ public class WorldController : MonoBehaviour
             Application.Quit();
         }
 
-        isLastFrame = isLastFrame || simulationSeconds != -1 && simulationTimeSeonds > simulationSeconds;
+        var conveyorControllers = GetComponentsInChildren<AbstractConveyorController>();
+        foreach (var controller in conveyorControllers) {
+            controller.HandleAction();
+        }
+
+        foreach (var controller in conveyorControllers) {
+            controller.FlushBuffer();
+        }
+
+        isLastFrame = isLastFrame || simulationSeconds != -1 && simulationTimeSeonds >= simulationSeconds;
     }
 }

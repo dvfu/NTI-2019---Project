@@ -12,9 +12,8 @@ public class ResourceSourceController : AbstractConveyorController
         lastResourceInstantiateTime = Time.timeSinceLevelLoad;
     }
 
-    public new void FixedUpdate()
+    public void FixedUpdate()
     {
-        base.FixedUpdate();
         if (resourceInConveyorSet.Count > 0)
             lastResourceInstantiateTime = Time.time;
 

@@ -16,10 +16,8 @@ public class AssemblyMachineController : AbstractConveyorController
         return outputResourcePrefab;
     }
 
-    public new void FixedUpdate()
+    public void FixedUpdate()
     {
-        base.FixedUpdate();
-
         GameObject firstResource = null, secondResource = null;
         foreach (var resource in resourceInConveyorSet.Keys) {
             var type = resource.GetComponent<ResourceController>().Type;

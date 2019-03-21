@@ -5,6 +5,7 @@ abstract public class AbstractConveyorController : MonoBehaviour
 {
     public GameObject[] pins;
     public Dictionary<GameObject, bool> resourceInConveyorSet = new Dictionary<GameObject, bool>();
+    public List<GameObject> bufferedResources = new List<GameObject>();
 
     protected GameObject positionObject;
 
@@ -25,8 +26,17 @@ abstract public class AbstractConveyorController : MonoBehaviour
     {
         resource.transform.parent = positionObject.transform;
         var controller = resource.GetComponent<ResourceController>();
-        resource.transform.position = resource.transform.position.normalized * (resource.transform.position.magnitude - controller.Error.magnitude);
-        resourceInConveyorSet[resource] = true;
+        resource.transform.position = resource.transform.position.normalized * (resource.transform.position.magnitude - controller.Error);
+        controller.Error = 0;
+        bufferedResources.Add(resource);
+        
+    }
+
+    public void FlushBuffer()
+    {
+        foreach (var resource in bufferedResources)
+            resourceInConveyorSet[resource] = true;
+        bufferedResources.Clear();
     }
 
     protected void ExtractResource(GameObject resource)
@@ -45,15 +55,15 @@ abstract public class AbstractConveyorController : MonoBehaviour
         return resource.transform.localPosition == Vector3.zero;
     }
 
-    public void FixedUpdate()
+    public void HandleAction()
     {
         foreach (var resource in resourceInConveyorSet.Keys) {
+            var resourceController = resource.GetComponent<ResourceController>();
             if (resource.transform.localPosition != Vector3.zero) {
                 var position = resource.transform.localPosition;
-                var k = 1 - Time.fixedDeltaTime * Consts.CONVEYOR_SPEED / position.magnitude;
+                var k = 1.0f - Time.fixedDeltaTime * Consts.CONVEYOR_SPEED / position.magnitude;
                 if (k < 0) {
-                    var resourceController = resource.GetComponent<ResourceController>();
-                    resourceController.Error += position * (-k);
+                    resourceController.Error += position.magnitude * (-k);
                     k = 0;
                 }
                 resource.transform.localPosition = position * k;
