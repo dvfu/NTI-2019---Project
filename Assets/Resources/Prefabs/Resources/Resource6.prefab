@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23847105133834246}
   - component: {fileID: 114963790133138546}
   m_Layer: 0
-  m_Name: Resource5
+  m_Name: Resource6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 20c7eb151d7441f4b8cb971a12cb77c0, type: 2}
+  - {fileID: 2100000, guid: 40c932c2c5664a844a5632c0abeafc88, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,4 +107,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ad7b1e84698024f97df92cc134acbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 4
+  Type: 5
