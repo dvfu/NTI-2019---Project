@@ -24,6 +24,8 @@ abstract public class AbstractConveyorController : MonoBehaviour
     public void AddResource(GameObject resource)
     {
         resource.transform.parent = positionObject.transform;
+        var controller = resource.GetComponent<ResourceController>();
+        resource.transform.position = resource.transform.position.normalized * (resource.transform.position.magnitude - controller.Error.magnitude);
         resourceInConveyorSet[resource] = true;
     }
 
@@ -48,7 +50,13 @@ abstract public class AbstractConveyorController : MonoBehaviour
         foreach (var resource in resourceInConveyorSet.Keys) {
             if (resource.transform.localPosition != Vector3.zero) {
                 var position = resource.transform.localPosition;
-                resource.transform.localPosition = position * Mathf.Max(1 - Time.fixedDeltaTime * Consts.CONVEYOR_SPEED / position.magnitude, 0);
+                var k = 1 - Time.fixedDeltaTime * Consts.CONVEYOR_SPEED / position.magnitude;
+                if (k < 0) {
+                    var resourceController = resource.GetComponent<ResourceController>();
+                    resourceController.Error += position * (-k);
+                    k = 0;
+                }
+                resource.transform.localPosition = position * k;
             }
         }
 
