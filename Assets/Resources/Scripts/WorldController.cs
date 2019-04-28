@@ -27,9 +27,13 @@ public class WorldController : MonoBehaviour
 
     public static int MoveCount = 0;
 
-    private int simulationSeconds = -1;
-    private float simulationTimeSeonds;
-    private bool isLastFrame = false;
+    private const int EXTRA_FRAME_LIMIT = 1;
+
+    private int simulationSecondsLimit = -1;
+    private float simulationTimeSeonds = 0;
+    private bool isExtraFrames = false;
+    private int extraFrameCount = 0;
+    private AbstractConveyorController[] conveyorControllers;
 
     private void CreateSceneObjects(InputData inputObjects)
     {
@@ -71,8 +75,8 @@ public class WorldController : MonoBehaviour
     public void Awake()
     {
         if (GameState.readInputFileIfExists) {
-            var inputData = FileHandler.ReadInputFile(GameState.filename);
-            simulationSeconds = inputData.simulationSeconds;
+            var inputData = FileHandler.ReadInputFile(GameState.inputFileName);
+            simulationSecondsLimit = inputData.simulationSeconds;
             CreateSceneObjects(inputData);
         }
 
@@ -83,31 +87,38 @@ public class WorldController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        ++MoveCount;
+        if (isExtraFrames)
+            ++extraFrameCount;
 
+        ++MoveCount;
         simulationTimeSeonds += Time.fixedDeltaTime;
-        if (isLastFrame) {
+        isExtraFrames = isExtraFrames || simulationSecondsLimit != -1 && simulationTimeSeonds + Consts.FIXED_TIME_DELTA >= simulationSecondsLimit;
+
+        if (isExtraFrames && extraFrameCount >= EXTRA_FRAME_LIMIT)
+        {
             Time.timeScale = 0.0f;
 
-            var outputData = new OutputData{resources = new List<Resource>()};
-            foreach (var resourceController in FindObjectsOfType<ResourceController>()) {
+            var outputData = new OutputData { resources = new List<Resource>() };
+            foreach (var resourceController in FindObjectsOfType<ResourceController>())
+            {
                 var position = resourceController.gameObject.transform.position;
-                var resource = new Resource{x = position.x, y = position.z, type = resourceController.Type};
-                outputData.resources.Add(resource);
+                outputData.resources.Add(new Resource { x = position.x, y = position.z, type = resourceController.Type });
             }
             FileHandler.WriteOutputFile(outputData);
             Application.Quit();
+            return;
         }
 
-        var conveyorControllers = GetComponentsInChildren<AbstractConveyorController>();
-        foreach (var controller in conveyorControllers) {
-            controller.HandleAction();
-        }
+        if (conveyorControllers == null)
+            conveyorControllers = GetComponentsInChildren<AbstractConveyorController>();
 
-        foreach (var controller in conveyorControllers) {
-            controller.FlushBuffer();
-        }
+        foreach (var controller in conveyorControllers)
+            controller.PrepareAction(simulationTimeSeonds);
 
-        isLastFrame = isLastFrame || simulationSeconds != -1 && simulationTimeSeonds >= simulationSeconds;
+        foreach (var controller in conveyorControllers)
+            controller.HandleAction(simulationTimeSeonds);
+
+        foreach (var controller in conveyorControllers)
+            controller.PostAction(simulationTimeSeonds);
     }
 }

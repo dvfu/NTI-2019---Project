@@ -16,8 +16,10 @@ public class AssemblyMachineController : AbstractConveyorController
         return outputResourcePrefab;
     }
 
-    public void FixedUpdate()
+    public override void PostAction(float simulationTimeSeconds)
     {
+        base.PostAction(simulationTimeSeconds);
+
         GameObject firstResource = null, secondResource = null;
         foreach (var resource in resourceInConveyorSet.Keys) {
             var type = resource.GetComponent<ResourceController>().Type;
@@ -30,10 +32,13 @@ public class AssemblyMachineController : AbstractConveyorController
         if (firstResource != null && secondResource != null) {
             var product = Instantiate(GetOutputResourcePrefab(), positionObject.transform);
             product.transform.localPosition = Vector3.zero;
+
             DestroyResource(firstResource);
             DestroyResource(secondResource);
-            AddResource(product);
+            AddResource(product, true);
         }
+
+        SendResources(true);
     }
 
     protected override bool CanSendResource(GameObject resource)

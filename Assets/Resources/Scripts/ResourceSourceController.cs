@@ -4,24 +4,22 @@ public class ResourceSourceController : AbstractConveyorController
 {
     public GameObject ResourcePrefab;
 
-    private float lastResourceInstantiateTime;
+    private float lastResourceInstantiateTime = 0;
 
-    public new void Start()
+    public override void PrepareAction(float simulationTimeSeconds)
     {
-        base.Start();
-        lastResourceInstantiateTime = Time.timeSinceLevelLoad;
-    }
+        base.PrepareAction(simulationTimeSeconds);
 
-    public void FixedUpdate()
-    {
         if (resourceInConveyorSet.Count > 0)
             lastResourceInstantiateTime = Time.time;
 
-        if (resourceInConveyorSet.Count == 0 && Time.time - lastResourceInstantiateTime > Consts.CREATE_RESOURCE_INTERVAL_SECONDS) {
+        if (resourceInConveyorSet.Count == 0 && simulationTimeSeconds - lastResourceInstantiateTime + Consts.FIXED_TIME_DELTA >= Consts.CREATE_RESOURCE_INTERVAL_SECONDS) {
             lastResourceInstantiateTime += Consts.CREATE_RESOURCE_INTERVAL_SECONDS;
             var resource = Instantiate(ResourcePrefab, positionObject.transform);
             resource.transform.localPosition = Vector3.zero;
-            resourceInConveyorSet[resource] = true;
+            AddResource(resource, true);
         }
+
+        SendResources(false);
     }
 }

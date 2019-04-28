@@ -5,5 +5,6 @@ using UnityEngine;
 public class GameState
 {
     public static bool readInputFileIfExists = true;
-    public static string filename = "input.txt";
+    public static string inputFileName = "input.txt";
+    public static string outputFileName = "output.txt";
 }

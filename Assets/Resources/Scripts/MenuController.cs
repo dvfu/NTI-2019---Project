@@ -94,14 +94,13 @@ public class MenuController : MonoBehaviour
 
     private void OnLoadGameButtonClick()
     {
-        // для демки думаю и так сойдёт.
         string filename = null;
         foreach (var path in Directory.GetFiles("."))
             if (path == ".\\input.txt" || path == ".\\input01.txt")
                 filename = path;
 
         if (filename != null) {
-            GameState.filename = filename;
+            GameState.inputFileName = filename;
             GameState.readInputFileIfExists = true;
         }
 

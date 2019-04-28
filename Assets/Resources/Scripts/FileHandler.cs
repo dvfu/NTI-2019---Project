@@ -126,7 +126,7 @@ public class FileHandler
 
     public static void WriteOutputFile(OutputData data)
     {
-        var writer = File.CreateText("output.txt");
+        var writer = File.CreateText(GameState.outputFileName);
 
         writer.WriteLine(data.resources.Count.ToString());
         foreach (var resource in data.resources)

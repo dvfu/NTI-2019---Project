@@ -5,6 +5,7 @@ public class Consts
 {
     public const float CREATE_RESOURCE_INTERVAL_SECONDS = 2.0f;
     public const float CONVEYOR_SPEED = 1.0f;
+    public const float FIXED_TIME_DELTA = 0.0001f;
 }
 
 public class Utils
