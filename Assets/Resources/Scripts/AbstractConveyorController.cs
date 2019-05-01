@@ -51,28 +51,42 @@ abstract public class AbstractConveyorController : MonoBehaviour
         return resource.transform.localPosition == Vector3.zero;
     }
 
-    protected void SendResources(bool readyToMove)
+    protected void SendResources(bool extractedResourcesReadyToMove)
     {
         GameObject receiver = null;
+        GameObject outputPin = null;
         foreach (var pin in pins) {
             var pinController = pin.GetComponent<PinController>();
+            if (pinController.type == PinType.Output)
+                outputPin = pinController.gameObject;
+
             receiver = pinController.GetReceiverConveyor();
             if (receiver != null)
                 break;
         }
 
-        if (receiver != null) {
-            var extractedResources = new List<GameObject>();
-            foreach (var resource in resourceInConveyorSet.Keys) {
-                if (CanSendResource(resource)) {
-                    receiver.GetComponent<AbstractConveyorController>().AddResource(resource, readyToMove);
-                    extractedResources.Add(resource);
+        var extractedResources = new List<GameObject>();
+        foreach (var resource in resourceInConveyorSet.Keys) {
+            if (CanSendResource(resource)) {
+                extractedResources.Add(resource);
+                if (receiver != null)
+                    receiver.GetComponent<AbstractConveyorController>().AddResource(resource, extractedResourcesReadyToMove);
+                else if (outputPin != null) {
+                    resource.transform.parent = null;
+                    var velocity = outputPin.gameObject.transform.position - gameObject.transform.position;
+                    velocity.y = 0;
+                    velocity.Normalize();
+
+                    var rigidBody = resource.gameObject.AddComponent<Rigidbody>();
+                    rigidBody.useGravity = false;
+                    rigidBody.velocity = velocity;
+                    Destroy(resource, 1f / Consts.CONVEYOR_SPEED);
                 }
             }
-
-            foreach (var resource in extractedResources)
-                ExtractResource(resource);
         }
+
+        foreach (var resource in extractedResources)
+            ExtractResource(resource);
     }
 
     public virtual void PrepareAction(float simulationTimeSeconds)
