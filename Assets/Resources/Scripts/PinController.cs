@@ -11,7 +11,6 @@ public class PinController : MonoBehaviour
 {
     private bool inPosition;
     private GameObject receiver;
-    private GameObject otherPin;
 
     public PinType type;
 
@@ -28,11 +27,6 @@ public class PinController : MonoBehaviour
     public GameObject GetReceiverConveyor()
     {
         return receiver;
-    }
-
-    protected bool CanReceiveResource()
-    {
-        return true;
     }
 
     public void HandleOtherPin(GameObject otherPin)
@@ -55,18 +49,14 @@ public class PinController : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         var otherPinController = other.gameObject.GetComponent<PinController>();
-        if (otherPinController != null) {
-            otherPin = other.gameObject;
+        if (otherPinController != null)
             HandleOtherPin(other.gameObject);
-        }
     }
 
     public void OnTriggerExit(Collider other)
     {
         var otherPinController = other.gameObject.GetComponent<PinController>();
-        if (otherPinController != null) {
+        if (otherPinController != null)
             receiver = null;
-            otherPin = null;
-        }
     }
 }
